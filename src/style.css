@@ -12,15 +12,7 @@ nav {
     position: fixed;
     background-color: #247291;
     height: 100%;
-    width: 20vw;
-}
-
-#controls > button {
-    margin: 20px 0px 0px 40px;
-    color: white;
-    font-size: 2rem;
-    background-color: #247291;
-    border: none;
+    width: max(20vw, 400px);
 }
 
 #menu {
@@ -38,12 +30,21 @@ hr {
   width: 90%;
 }
 
-#menu button {
-    border-style: none;
-    background-color: #247291;
-    color: white;
-    font-size: 2rem;
-    transition: all 0.5s ease 0s;
+nav button {
+  border: none;
+  background-color: #247291;
+  color: white;
+  font-size: 2rem;
+  transition: all 0.5s ease;
+}
+
+nav button:hover {
+  background-color: white;
+  color: #247291;
+}
+
+nav > #controls > button {
+    margin: 20px 0px 0px 40px;
 }
 
 nav button:hover {
@@ -69,9 +70,7 @@ nav > #dashboard-logo {
 }
 
 #main-content {
-    background-color: black;
-    color: green;
-    top: 0px;
+    background-color: red;
     height: 100vh;
     margin-left: calc(20vw);
 }
@@ -102,6 +101,64 @@ input:focus::placeholder {
 }
 
 .task-content {
+    overflow: hidden;
     height: 80vh;
     background-color: #f5f9ee;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    padding: 2rem;
+    gap: 10px;
+}
+
+.task-content > #task-list-container {
+    height: 300px;
+    background-color: #f8da5b;
+}
+
+.task-content button {
+    color: black;
+    background-color: #f5f9ee;
+    border-radius: 5px;
+    border: none;
+    font-size: 1.5rem;
+    transition: all 0.5s ease;
+    /* margin: 0px 30px; */
+    height: 3rem;
+}
+
+.task-content button:hover {
+    color: #247291;
+    background-color: #f8da5b;
+    
+}
+
+dialog[open] .inputs {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+dialog::backdrop {
+    backdrop-filter: blur(2px);
+}
+
+dialog .inputs div:nth-child(-n + 2) {
+    background-color: red;
+    flex-basis: calc(100% - 20px);
+}
+
+dialog .inputs > div:nth-last-child(-n + 2) {
+    background-color: blue;
+    flex-basis: calc(50% - 20px);
+}
+
+dialog .inputs > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    gap: 10px;
 }
