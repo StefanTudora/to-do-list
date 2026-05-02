@@ -1,0 +1,107 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    gap: 0px;
+}
+
+body * {
+    font-family: 'Lucida Sans Typewriter', sans-serif;
+}
+
+nav {
+    position: fixed;
+    background-color: #247291;
+    height: 100%;
+    width: 20vw;
+}
+
+#controls > button {
+    margin: 20px 0px 0px 40px;
+    color: white;
+    font-size: 2rem;
+    background-color: #247291;
+    border: none;
+}
+
+#menu {
+    list-style: none;
+}
+
+#menu > li {
+    margin: 20px;
+}
+
+hr {
+  border: none;
+  height: 2px;
+  background-color: black;
+  width: 90%;
+}
+
+#menu button {
+    border-style: none;
+    background-color: #247291;
+    color: white;
+    font-size: 2rem;
+    transition: all 0.5s ease 0s;
+}
+
+nav button:hover {
+    background-color: white;
+    color: #247291;
+}
+
+nav > #dashboard-logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+}
+
+#dashboard-logo > img {
+    height: 5rem;
+}
+
+#dashboard-logo > p {
+    font-size: 3rem;
+}
+
+#main-content {
+    background-color: black;
+    color: green;
+    top: 0px;
+    height: 100vh;
+    margin-left: calc(20vw);
+}
+
+.user-content > input {
+    font-size: 2rem;
+    border-radius: 5px;
+    padding-left: 20px;
+    height: 3rem;
+    border: none;
+    width: 400px;
+    transition: all 0.5s ease 0s;
+}
+
+.user-content > input:focus {
+    width: 700px;
+    color: white;
+    background-color: #247291;
+}
+
+input:focus::placeholder {
+    color: white;
+}
+
+.user-content {
+    height: 20vh;
+    background-color: #eef2e2;
+}
+
+.task-content {
+    height: 80vh;
+    background-color: #f5f9ee;
+}
