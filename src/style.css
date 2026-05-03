@@ -130,15 +130,20 @@ input:focus::placeholder {
 .task-content button:hover {
     color: #247291;
     background-color: #f8da5b;
-    
 }
 
-dialog[open] .inputs {
+dialog[open] {
+    border-radius: 10px;
+    border-width: 1px;
+    width: min(20rem, 400px);
+}
+
+dialog .inputs {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 20px;
 }
 
 dialog::backdrop {
@@ -146,13 +151,11 @@ dialog::backdrop {
 }
 
 dialog .inputs div:nth-child(-n + 2) {
-    background-color: red;
-    flex-basis: calc(100% - 20px);
+    flex-basis: calc(100% - 10px);
 }
 
 dialog .inputs > div:nth-last-child(-n + 2) {
-    background-color: blue;
-    flex-basis: calc(50% - 20px);
+    flex-basis: calc(50% - 15px);
 }
 
 dialog .inputs > div {
@@ -160,5 +163,13 @@ dialog .inputs > div {
     flex-direction: column;
     justify-content: center;
     align-items: left;
-    gap: 10px;
+}
+
+dialog .controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin: 20px 5px 0px;
+    gap: 20px;
 }
