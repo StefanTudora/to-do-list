@@ -34,6 +34,10 @@
     </nav>
     <div id="main-content">
         <div class="user-content">
+            <div> 
+                <img src="./assets/robot-ai-svgrepo-com.svg" style="width: 10rem;">
+                <p style="font-size: 2rem;">Hello, friend! Let me give you a hand!</p>
+            </div>
             <input placeholder="Task search...">
         </div>
         <div class="task-content">
@@ -51,20 +55,20 @@
         <form method="dialog">
             <div class="inputs">
                 <div>
-                    <label for="name">Project Name</label>
-                    <input type="text" id="name" required>
+                    <label for="project-name">Project Name</label>
+                    <input type="text" name="project-name" required>
                 </div>
                 <div>
-                    <label for="name">Description</label>
-                    <textarea name="textarea" style="height:5rem;"></textarea>
+                    <label for="description">Description</label>
+                    <textarea name="textarea" name="description" style="height:5rem;" placeholder="Input short description..."></textarea>
                 </div>
                 <div>
-                    <label for="name">Due Date</label>
-                    <input type="date" id="name" required>
+                    <label for="date-control">Due Date</label>
+                    <input type="date" name="date-control" required>
                 </div>
                 <div>
-                    <label for="name">Priority</label>
-                    <select>
+                    <label for="priority">Priority</label>
+                    <select name="priority">
                         <option value="low">Low</option>
                         <option value="medium">Medium</option>
                         <option value="high">High</option>

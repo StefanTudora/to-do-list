@@ -19,31 +19,31 @@ nav {
     list-style: none;
 }
 
-#menu > li {
+#menu>li {
     margin: 20px;
 }
 
 hr {
-  border: none;
-  height: 2px;
-  background-color: black;
-  width: 90%;
+    border: none;
+    height: 2px;
+    background-color: black;
+    width: 90%;
 }
 
 nav button {
-  border: none;
-  background-color: #247291;
-  color: white;
-  font-size: 2rem;
-  transition: all 0.5s ease;
+    border: none;
+    background-color: #247291;
+    color: white;
+    font-size: 2rem;
+    transition: all 0.5s ease;
 }
 
 nav button:hover {
-  background-color: white;
-  color: #247291;
+    background-color: white;
+    color: #247291;
 }
 
-nav > #controls > button {
+nav>#controls>button {
     margin: 20px 0px 0px 40px;
 }
 
@@ -52,7 +52,7 @@ nav button:hover {
     color: #247291;
 }
 
-nav > #dashboard-logo {
+nav>#dashboard-logo {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -61,21 +61,31 @@ nav > #dashboard-logo {
     color: white;
 }
 
-#dashboard-logo > img {
+#dashboard-logo>img {
     height: 5rem;
 }
 
-#dashboard-logo > p {
+#dashboard-logo>p {
     font-size: 3rem;
 }
 
 #main-content {
-    background-color: red;
     height: 100vh;
     margin-left: calc(20vw);
 }
 
-.user-content > input {
+.user-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: center;
+    gap: 20px;
+    padding: 1rem;
+    height: 24vh;
+    background-color: #eef2e2;
+}
+
+.user-content>input {
     font-size: 2rem;
     border-radius: 5px;
     padding-left: 20px;
@@ -85,20 +95,23 @@ nav > #dashboard-logo {
     transition: all 0.5s ease 0s;
 }
 
-.user-content > input:focus {
+.user-content>input:focus {
     width: 700px;
     color: white;
     background-color: #247291;
+}
+
+.user-content>div:nth-child(1) {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
 }
 
 input:focus::placeholder {
     color: white;
 }
 
-.user-content {
-    height: 20vh;
-    background-color: #eef2e2;
-}
 
 .task-content {
     overflow: hidden;
@@ -111,7 +124,7 @@ input:focus::placeholder {
     gap: 10px;
 }
 
-.task-content > #task-list-container {
+.task-content>#task-list-container {
     height: 300px;
     background-color: #f8da5b;
 }
@@ -154,11 +167,11 @@ dialog .inputs div:nth-child(-n + 2) {
     flex-basis: calc(100% - 10px);
 }
 
-dialog .inputs > div:nth-last-child(-n + 2) {
+dialog .inputs>div:nth-last-child(-n + 2) {
     flex-basis: calc(50% - 15px);
 }
 
-dialog .inputs > div {
+dialog .inputs>div {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -172,4 +185,30 @@ dialog .controls {
     align-items: center;
     margin: 20px 5px 0px;
     gap: 20px;
+}
+
+dialog[open] {
+    animation: fadein 0.4s ease-in forwards;
+}
+
+dialog[close] {
+    animation: fadeout 0.4s ease-out forwards;
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout {
+    100% {
+        opacity: 1;
+    }
+    0% {
+        opacity: 0;
+    }
 }
