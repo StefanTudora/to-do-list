@@ -124,9 +124,15 @@ input:focus::placeholder {
     gap: 10px;
 }
 
-.task-content>#task-list-container {
-    height: 300px;
-    background-color: #f8da5b;
+.task-content > #task-list-container > #temp-div {
+    /* height: 300px;
+    background-color: #f8da5b; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    font-size: 1.5rem;
 }
 
 .task-content button {

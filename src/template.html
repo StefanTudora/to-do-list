@@ -34,8 +34,8 @@
     </nav>
     <div id="main-content">
         <div class="user-content">
-            <div> 
-                <img src="./assets/robot-ai-svgrepo-com.svg" style="width: 10rem;">
+            <div>
+                <img src="./assets/robot-ai-svgrepo-com.svg" style="width: 7.5rem;">
                 <p style="font-size: 2rem;">Hello, friend! Let me give you a hand!</p>
             </div>
             <input placeholder="Task search...">
@@ -46,7 +46,10 @@
             </div>
             <div id="task-list-container">
                 <!-- Dinamicaly generated -->
-                <p>Please select project</p> 
+                <div id="temp-div">
+                    <img src="./assets/hubot-svgrepo-com.svg" style="width: 15rem;">
+                    <p>Oops! Please select a project to begin planning!</p>
+                </div>
             </div>
         </div>
     </div>
@@ -60,7 +63,8 @@
                 </div>
                 <div>
                     <label for="description">Description</label>
-                    <textarea name="textarea" name="description" id="description" style="height:5rem;" placeholder="Input short description..."></textarea>
+                    <textarea name="textarea" name="description" id="description" style="height:5rem;"
+                        placeholder="Input short description..."></textarea>
                 </div>
                 <div>
                     <label for="dueDate">Due Date</label>
