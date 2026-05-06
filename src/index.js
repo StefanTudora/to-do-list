@@ -3,14 +3,16 @@ import './style.css';
 
 import { Project } from './project-src/project.js';
 import { Task } from './task-src/task.js';
+import { ProjectManager } from './project-src/project-manager.js';
+
+const projectManager = new ProjectManager();
 
 function attachDialogButtonListener() {
 
-    Project.attachProjectCreateListener();
-    
-    Task.attachTaskCreateListeners();
+    attachCreateDeliverableListeners()
 
     const dialog = document.querySelector("dialog");
+    const from = document.querySelector('form')
 
     document.querySelector("#close-btn").addEventListener("click", (event) => {
         event.preventDefault();
@@ -18,31 +20,36 @@ function attachDialogButtonListener() {
     });
 
     document.querySelector("#submit-btn").addEventListener("click", (event) => {
-        
+
         event.preventDefault();
         const type = dialog.dataset.type;
-        const data = Object.fromEntries(new FormData(document.querySelector('form')));
+        const data = new FormData(from);
 
-        console.log(data);
-
-        switch(type) {
+        switch (type) {
             case "project":
-                // Create a project here;
-                
-                // var project = new Project();
+                var project = new Project(data);
+                projectManager.addProject(project);
                 break;
             case "task":
-                // var task = new Task();
-                // Create a task here;
+                var task = new Task(data);
+                projectManager.addTaksToProject(task);
                 break;
         }
+        from.reset();
         dialog.close();
     });
 }
 
-function addProjectEntry(projectName) {
-    const menu = document.querySelector(".menu");
-    menu.appendChild(document.createElement("li").appendChild(document.createTextNode(projectName)));
+function attachCreateDeliverableListeners() {
+    const typeList = ["project", "task"];
+    document.querySelectorAll(".create-btn").forEach((btn, idx) => {
+        btn.addEventListener("click", () => {
+            const dialog = document.querySelector("dialog");
+            // Set type to diferentiate at instantiation of deliverable
+            dialog.dataset.type = typeList[idx];
+            dialog.showModal();
+        });
+    });
 }
 
 attachDialogButtonListener();

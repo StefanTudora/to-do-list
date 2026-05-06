@@ -2,18 +2,17 @@
 // Base class for a deliverable
 class Deliverable {
 
-    constructor(name, description, dueDate, priority) {
-        this.name = name;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
+    constructor(deliverableData) {
+        for (const [key, value] of deliverableData.entries()) {
+            this[key] = value;
+        }
     }
 
     getName() {
-        return this.name;
+        return this.project;
     }
 
-    getDescription() { 
+    getDescription() {
         return this.description;
     }
 
@@ -23,6 +22,10 @@ class Deliverable {
 
     getPriority() {
         return this.priority;
+    }
+
+    getListableItem() {
+        // Intentionally left empty
     }
 
 }

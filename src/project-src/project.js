@@ -2,22 +2,35 @@
 import { Task } from '../task-src/task.js'
 import { Deliverable } from '../utils/deliverable.js'
 
+// TODO -> split the project/task classes in UI and Model, don't have a single class handling the entire logic
+
 class Project extends Deliverable {
 
     // List of current task for the Project
-    #taskList = {};
+    #taskList = [];
 
-    constructor(name, description, dueDate, priority) {
-        super(name, description, dueDate, priority);
+    constructor(deliverableData) {
+        super(deliverableData);
     }
 
-    static attachProjectCreateListener() {
-        document.querySelector("#add-project-btn").addEventListener("click", () => {
-            const dialog = document.querySelector("dialog");
-            // Set type to diferentiate at instantiation of deliverable
-            dialog.dataset.type = "project";
-            dialog.showModal();
+    getProjectContentDiv() {
+        // Create parent container
+        const projectUIContainer = document.createElement('ul');
+        projectUIContainer.setAttribute("id", this.getName());
+        this.#taskList.forEach(task => {
+            // Get the task container
+            const taskUIContainer = task.getListableUIContainer();
+            projectUIContainer.appendChild(taskUIContainer);
         });
+        return projectUIContainer;
+    }
+
+    setRunnable(routine) {
+        this.routine = routine;
+    }
+
+    addTask(task) {
+        this.#taskList.push(task);
     }
 
     getTaskList() {
@@ -28,15 +41,6 @@ class Project extends Deliverable {
         this.#taskList = {};
     }
 
-    getProjectContentDiv() {
-        // Create parent container
-        const projectUIContainer = document.createElement('div');
-        for (let task in taskList) {
-            // Get the task container
-            const taskUIContainer = task.getUIContainer();
-            projectUIContainer.appendChild(taskUIContainer);
-        } 
-    }
 }
 
 

@@ -3,22 +3,16 @@ import { Deliverable } from '../utils/deliverable.js'
 
 class Task extends Deliverable {
 
-    constructor(name, description, dueDate, priority) {
-        super(name, description, dueDate, priority);
+    constructor(deliverableData) {
+        super(deliverableData);
     }
 
-    static attachTaskCreateListeners() {
-        document.querySelector("#add-task-btn").addEventListener("click", () => {
-            const dialog = document.querySelector("dialog");
-            // Set type to diferentiate at instantiation of deliverable
-            dialog.showModal();
-        });
-    }
-
-    getUIContainer() {
-        return null;
+    getListableUIContainer() {
+        const listElement = document.createElement("li");
+        listElement.appendChild(document.createTextNode(this.project));
+        return listElement;
     }
 
 }
 
-export {Task};
+export { Task };

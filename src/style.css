@@ -19,7 +19,7 @@ nav {
     list-style: none;
 }
 
-#menu>li {
+#menu > li {
     margin: 20px;
 }
 
@@ -43,7 +43,7 @@ nav button:hover {
     color: #247291;
 }
 
-nav>#controls>button {
+nav > #controls > button {
     margin: 20px 0px 0px 40px;
 }
 
@@ -61,11 +61,11 @@ nav>#dashboard-logo {
     color: white;
 }
 
-#dashboard-logo>img {
+#dashboard-logo > img {
     height: 5rem;
 }
 
-#dashboard-logo>p {
+#dashboard-logo > p {
     font-size: 3rem;
 }
 
@@ -193,6 +193,20 @@ dialog[open] {
 
 dialog[close] {
     animation: fadeout 0.4s ease-out forwards;
+}
+
+dialog .modal-btn {
+    border-style: none;
+    background-color: white;
+    border-radius: 5px;
+    height: 2rem;
+    transition: 0.3s;
+}
+
+dialog .modal-btn:hover {
+    border-style: none;
+    background-color: #247291;
+    color:white;
 }
 
 @keyframes fadein {
