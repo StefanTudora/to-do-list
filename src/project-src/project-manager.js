@@ -1,3 +1,4 @@
+import { Name } from "ajv";
 
 // Handle storage of projects
 class ProjectManager {
@@ -18,7 +19,7 @@ class ProjectManager {
     addTaksToProject(task) {
         if (this.#activeProject !== undefined) {
             this.#activeProject.addTask(task);
-            document.querySelector("#task-list-container > ul").appendChild(task.getListableUIContainer());
+            document.querySelector("#task-list-container > ul").appendChild(this.getDeliverablePresentationCard(task));
         }
     }
 
@@ -51,6 +52,39 @@ class ProjectManager {
     addProjectEntryInMenu(listable) {
         const menuContainer = document.querySelector("nav > #menu");
         menuContainer.appendChild(this.getListableItem(listable));
+    }
+
+    getDeliverablePresentationCard(listable) {
+
+        const listElement = document.createElement("li");
+
+        const card = document.createElement("div");
+        
+        const name = document.createElement("h3");
+        name.textContent = listable.getName();
+
+        const text = document.createElement("p");
+        text.textContent = listable.getDescription();
+
+        const date = document.createElement("p");
+        date.textContent = listable.getDueDate();
+
+        const priority = document.createElement("p");
+        priority.textContent = listable.getPriority();
+        // text.textContent = listable.getDescription();
+
+        card.appendChild(name);
+        card.appendChild(text);
+        card.appendChild(date);
+        card.appendChild(priority);
+
+        listElement.appendChild(card);
+        return listElement;
+    }
+
+    getAllProjectUntilDate(date) {
+        const list = [];
+        return list;
     }
 
 }

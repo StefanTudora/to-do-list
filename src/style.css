@@ -85,7 +85,7 @@ nav>#dashboard-logo {
     background-color: #eef2e2;
 }
 
-.user-content>input {
+.user-content > input {
     font-size: 2rem;
     border-radius: 5px;
     padding-left: 20px;
@@ -95,13 +95,13 @@ nav>#dashboard-logo {
     transition: all 0.5s ease 0s;
 }
 
-.user-content>input:focus {
+.user-content > input:focus {
     width: 700px;
     color: white;
     background-color: #247291;
 }
 
-.user-content>div:nth-child(1) {
+.user-content > div:nth-child(1) {
     display: flex;
     flex-direction: row;
     justify-content: left;
@@ -149,6 +149,14 @@ input:focus::placeholder {
 .task-content button:hover {
     color: #247291;
     background-color: #f8da5b;
+}
+
+#task-list-container li > div {
+    background-color: antiquewhite;
+    border-width: 1px;
+    border-radius: 5px;
+    border-style: solid;
+    padding: 5px 10px;
 }
 
 dialog[open] {
@@ -221,14 +229,5 @@ dialog .modal-btn:hover {
     }
     100% {
         opacity: 1;
-    }
-}
-
-@keyframes fadeout {
-    100% {
-        opacity: 1;
-    }
-    0% {
-        opacity: 0;
     }
 }
