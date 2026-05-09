@@ -7,6 +7,8 @@ import { ProjectManager } from './project-src/project-manager.js';
 
 const projectManager = new ProjectManager();
 
+projectManager.setBtnVisibility(false);
+
 function attachDialogButtonListener() {
 
     attachCreateDeliverableListeners()
@@ -16,6 +18,7 @@ function attachDialogButtonListener() {
 
     document.querySelector("#close-btn").addEventListener("click", (event) => {
         event.preventDefault();
+        from.reset();
         dialog.close();
     });
 

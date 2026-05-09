@@ -12,7 +12,6 @@ class Task extends Deliverable {
         listElement.appendChild(document.createTextNode(this.project));
         return listElement;
     }
-
 }
 
 export { Task };

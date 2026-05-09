@@ -1,6 +1,11 @@
 import { Name } from "ajv";
+import { setAddTaskBtnVisibility } from '../utils/ui-controller.js'
+import { isEqual, isAfter, isBefore } from 'date-fns';
 
-// Handle storage of projects
+/*
+    Entity used mainly for handling the projects and their storage
+*/
+
 class ProjectManager {
 
     #projectMap = new Map();
@@ -25,6 +30,11 @@ class ProjectManager {
 
     setActiveProject(project) {
         this.#activeProject = project;
+        this.setBtnVisibility(true);
+    }
+
+    setBtnVisibility(state) {
+        setAddTaskBtnVisibility(state);
     }
 
     getActiveProject() {
@@ -82,9 +92,14 @@ class ProjectManager {
         return listElement;
     }
 
-    getAllProjectUntilDate(date) {
-        const list = [];
-        return list;
+    getAllTasksWithinDeadline(dateFilter) {
+        const filteredProjects = [];
+        projectMap.array.forEach((key, project) => {
+            if (isBefore(project.getParsedDateObj(), dateFilter)) {
+                filteredProjects.push(project);
+            }
+        });
+        return filteredProjects;
     }
 
 }

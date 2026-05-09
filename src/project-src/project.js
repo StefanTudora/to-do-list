@@ -25,10 +25,6 @@ class Project extends Deliverable {
         return projectUIContainer;
     }
 
-    setRunnable(routine) {
-        this.routine = routine;
-    }
-
     addTask(task) {
         this.#taskList.push(task);
     }
@@ -40,7 +36,6 @@ class Project extends Deliverable {
     clearTaskList() {
         this.#taskList = {};
     }
-
 }
 
 
