@@ -16,7 +16,7 @@ class Project extends Deliverable {
     getProjectContentDiv() {
         // Create parent container
         const projectUIContainer = document.createElement('ul');
-        projectUIContainer.setAttribute("id", this.getName());
+        projectUIContainer.setAttribute("id", this.getDeliverableName());
         this.#taskList.forEach(task => {
             // Get the task container
             const taskUIContainer = task.getListableUIContainer();
@@ -31,10 +31,6 @@ class Project extends Deliverable {
 
     getTaskList() {
         return this.#taskList;
-    }
-
-    clearTaskList() {
-        this.#taskList = {};
     }
 }
 

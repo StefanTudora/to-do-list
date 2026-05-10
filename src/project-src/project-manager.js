@@ -1,6 +1,8 @@
 import { Name } from "ajv";
 import { setAddTaskBtnVisibility } from '../utils/ui-controller.js'
 import { isEqual, isAfter, isBefore } from 'date-fns';
+import { Project } from './project.js';
+import { TaskFilter } from './task-filter.js';
 
 /*
     Entity used mainly for handling the projects and their storage
@@ -8,8 +10,7 @@ import { isEqual, isAfter, isBefore } from 'date-fns';
 
 class ProjectManager {
 
-    #projectMap = new Map();
-    #perspectives = new Map();
+    #projectList = [];
     #activeProject = undefined;
 
     constructor() {
@@ -18,7 +19,7 @@ class ProjectManager {
 
     addProject(project) {
         this.addProjectEntryInMenu(project);
-        this.#projectMap.set(project.getName(), project);
+        this.#projectList.push(project);
     }
 
     addTaksToProject(task) {
@@ -30,7 +31,7 @@ class ProjectManager {
 
     setActiveProject(project) {
         this.#activeProject = project;
-        this.setBtnVisibility(true);
+        this.setBtnVisibility((project instanceof TaskFilter) ? false : true);
     }
 
     setBtnVisibility(state) {
@@ -45,13 +46,14 @@ class ProjectManager {
     getListableItem(project) {
         const listItem = document.createElement("li"), button = document.createElement("button"),
             listContainer = document.querySelector("#task-list-container");
-        const projectName = project.getName();
-        listItem.setAttribute("id", projectName);
+        const projectName = project.getDeliverableName();
         button.textContent = projectName;
         button.addEventListener("click", () => {
             this.setActiveProject(project);
             listContainer.replaceChildren();
-            // if (this.#projectMap.get(project.getName()))
+            if (project instanceof TaskFilter) {
+                this.getAllTasksWithinDeadline(project.getDueDate()).forEach(task => project.addTask());
+            }
             listContainer.appendChild(project.getProjectContentDiv());
         });
         listItem.appendChild(button);
@@ -69,9 +71,9 @@ class ProjectManager {
         const listElement = document.createElement("li");
 
         const card = document.createElement("div");
-        
+
         const name = document.createElement("h3");
-        name.textContent = listable.getName();
+        name.textContent = listable.getDeliverableName();
 
         const text = document.createElement("p");
         text.textContent = listable.getDescription();
@@ -94,11 +96,16 @@ class ProjectManager {
 
     getAllTasksWithinDeadline(dateFilter) {
         const filteredProjects = [];
-        projectMap.array.forEach((key, project) => {
-            if (isBefore(project.getParsedDateObj(), dateFilter)) {
-                filteredProjects.push(project);
+        for (var project of this.#projectList) {
+            if (project instanceof TaskFilter) {
+                continue;
             }
-        });
+            project.getTaskList().forEach(task => {
+                if (isBefore(task.getDueDate(), dateFilter)) {
+                    filteredProjects.push(project);
+                }
+            });
+        }
         return filteredProjects;
     }
 

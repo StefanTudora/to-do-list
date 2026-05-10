@@ -8,15 +8,17 @@ class Deliverable {
     #dateObj = undefined;
 
     constructor(deliverableData) {
-        for (const [key, value] of deliverableData.entries()) {
-            this[key] = value;
+        if (deliverableData !== undefined) {
+            for (const [key, value] of deliverableData) {
+                this[key] = value;
+            }
+            this.#dateObj = parseISO(this.getDueDate());
+            this.dueDate = format(this.#dateObj, 'do MMMM yyyy');
         }
-        this.#dateObj = parseISO(this.getDueDate());
-        this.dueDate = format(this.#dateObj, 'EEEE, do MMMM yyyy');
     }
 
-    getName() {
-        return this.project;
+    getDeliverableName() {
+        return this.deliverableName;
     }
 
     getDescription() {

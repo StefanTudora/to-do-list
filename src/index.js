@@ -1,9 +1,11 @@
 
 import './style.css';
 
-import { Project } from './project-src/project.js';
 import { Task } from './task-src/task.js';
+import { Project } from './project-src/project.js';
 import { ProjectManager } from './project-src/project-manager.js';
+import { TaskFilter } from './project-src/task-filter.js';
+import { addDays, addWeeks, format } from 'date-fns';
 
 const projectManager = new ProjectManager();
 
@@ -11,14 +13,15 @@ projectManager.setBtnVisibility(false);
 
 function attachDialogButtonListener() {
 
+    addBaseProjects();
     attachCreateDeliverableListeners()
 
     const dialog = document.querySelector("dialog");
-    const from = document.querySelector('form')
+    const form = document.querySelector('form');
 
     document.querySelector("#close-btn").addEventListener("click", (event) => {
         event.preventDefault();
-        from.reset();
+        form.reset();
         dialog.close();
     });
 
@@ -26,7 +29,7 @@ function attachDialogButtonListener() {
 
         event.preventDefault();
         const type = dialog.dataset.type;
-        const data = new FormData(from);
+        const data = new Map(new FormData(form));
 
         switch (type) {
             case "project":
@@ -38,11 +41,25 @@ function attachDialogButtonListener() {
                 projectManager.addTaksToProject(task);
                 break;
         }
-        from.reset();
+        form.reset();
         dialog.close();
     });
 }
 
+function addBaseProjects() {
+
+    const today = new Date();
+
+    const todayPrj = new TaskFilter('Today', format(today, 'do MMMM yyyy'));
+    const tommorowPrj = new TaskFilter('Tomorrow', format(addDays(today, 1), 'do MMMM yyyy'));
+    const weekPrj = new TaskFilter('This week', format(addWeeks(today, 1), 'do MMMM yyyy'));
+
+    projectManager.addProject(todayPrj);
+    projectManager.addProject(tommorowPrj);
+    projectManager.addProject(weekPrj);
+}
+
+// TODO -> move into the ui-controller class
 function attachCreateDeliverableListeners() {
     const typeList = ["project", "task"];
     document.querySelectorAll(".create-btn").forEach((btn, idx) => {
