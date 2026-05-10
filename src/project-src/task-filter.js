@@ -5,16 +5,19 @@ class TaskFilter extends Project {
 
     // dueDate behaves now as a filtering paremeter
 
-    constructor(deliverableName, dueDate) {
+    constructor(deliverableName, dateCheckRunnable) {
         super();
         this.deliverableName = deliverableName;
-        this.dueDate = dueDate;
+        this.dateCheckRunnable = dateCheckRunnable;
     }
 
     setTasks(taskList) {
         taskList.array.forEach(task => this.addTask(task));
     }
 
+    isTaskInRange(date) {
+        return this.dateCheckRunnable(date);
+    }
 }
 
 export { TaskFilter };

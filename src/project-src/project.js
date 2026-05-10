@@ -13,24 +13,16 @@ class Project extends Deliverable {
         super(deliverableData);
     }
 
-    getProjectContentDiv() {
-        // Create parent container
-        const projectUIContainer = document.createElement('ul');
-        projectUIContainer.setAttribute("id", this.getDeliverableName());
-        this.#taskList.forEach(task => {
-            // Get the task container
-            const taskUIContainer = task.getListableUIContainer();
-            projectUIContainer.appendChild(taskUIContainer);
-        });
-        return projectUIContainer;
-    }
-
     addTask(task) {
         this.#taskList.push(task);
     }
 
     getTaskList() {
         return this.#taskList;
+    }
+
+    clearTaskList() {
+        this.#taskList = [];
     }
 }
 

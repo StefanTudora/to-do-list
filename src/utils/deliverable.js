@@ -13,7 +13,6 @@ class Deliverable {
                 this[key] = value;
             }
             this.#dateObj = parseISO(this.getDueDate());
-            this.dueDate = format(this.#dateObj, 'do MMMM yyyy');
         }
     }
 
@@ -31,11 +30,6 @@ class Deliverable {
 
     getPriority() {
         return this.priority;
-    }
-
-    // Used in comparisons for date filtered projects
-    getParsedDateObj() {
-        return this.#dateObj;
     }
 }
 

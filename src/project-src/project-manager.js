@@ -1,12 +1,7 @@
-import { Name } from "ajv";
 import { setAddTaskBtnVisibility } from '../utils/ui-controller.js'
-import { isEqual, isAfter, isBefore } from 'date-fns';
 import { Project } from './project.js';
 import { TaskFilter } from './task-filter.js';
-
-/*
-    Entity used mainly for handling the projects and their storage
-*/
+import { format } from 'date-fns';
 
 class ProjectManager {
 
@@ -52,9 +47,16 @@ class ProjectManager {
             this.setActiveProject(project);
             listContainer.replaceChildren();
             if (project instanceof TaskFilter) {
-                this.getAllTasksWithinDeadline(project.getDueDate()).forEach(task => project.addTask());
+                project.clearTaskList();
+                this.#projectList.filter(currPrj => !(currPrj instanceof TaskFilter)).forEach(currPrj => {
+                    currPrj.getTaskList().forEach(task => {
+                        if (project.isTaskInRange(task.getDueDate())) {
+                            project.addTask(task);
+                        }
+                    });
+                });
             }
-            listContainer.appendChild(project.getProjectContentDiv());
+            listContainer.appendChild(this.getProjectContentDiv(project));
         });
         listItem.appendChild(button);
         return listItem;
@@ -79,11 +81,10 @@ class ProjectManager {
         text.textContent = listable.getDescription();
 
         const date = document.createElement("p");
-        date.textContent = listable.getDueDate();
+        date.textContent = format(listable.getDueDate(), 'do MMMM yyyy');
 
         const priority = document.createElement("p");
         priority.textContent = listable.getPriority();
-        // text.textContent = listable.getDescription();
 
         card.appendChild(name);
         card.appendChild(text);
@@ -94,19 +95,16 @@ class ProjectManager {
         return listElement;
     }
 
-    getAllTasksWithinDeadline(dateFilter) {
-        const filteredProjects = [];
-        for (var project of this.#projectList) {
-            if (project instanceof TaskFilter) {
-                continue;
-            }
-            project.getTaskList().forEach(task => {
-                if (isBefore(task.getDueDate(), dateFilter)) {
-                    filteredProjects.push(project);
-                }
-            });
-        }
-        return filteredProjects;
+    getProjectContentDiv(project) {
+        // Create parent container
+        const projectUIContainer = document.createElement('ul');
+        projectUIContainer.setAttribute("id", project.getDeliverableName());
+        project.getTaskList().forEach(task => {
+            // Get the task container
+            const taskUIContainer = this.getDeliverablePresentationCard(task);
+            projectUIContainer.appendChild(taskUIContainer);
+        });
+        return projectUIContainer;
     }
 
 }
