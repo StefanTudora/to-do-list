@@ -15,12 +15,15 @@ class ProjectManager {
     addProject(project) {
         this.addProjectEntryInMenu(project);
         this.#projectList.push(project);
+        localStorage.setItem(project.getDeliverableName(), project);
     }
 
     addTaksToProject(task) {
         if (this.#activeProject !== undefined) {
             this.#activeProject.addTask(task);
             document.querySelector("#task-list-container > ul").appendChild(this.getDeliverablePresentationCard(task));
+            // Update the storage for the project
+            localStorage.setItem(this.#activeProject.getDeliverableName(), this.#activeProject);
         }
     }
 

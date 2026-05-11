@@ -14,7 +14,8 @@ projectManager.setBtnVisibility(false);
 function attachDialogButtonListener() {
 
     addBaseProjects();
-    attachCreateDeliverableListeners()
+    attachCreateDeliverableListeners();
+    loadFromStorage();
 
     const dialog = document.querySelector("dialog");
     const form = document.querySelector('form');
@@ -67,6 +68,18 @@ function attachCreateDeliverableListeners() {
             dialog.dataset.type = typeList[idx];
             dialog.showModal();
         });
+    });
+}
+
+function loadFromStorage() {
+    if (localStorage.length === 0) {
+        return;
+    }
+    Object.keys(localStorage).forEach(function (key) {
+        const currPrj = localStorage.getItem(key);
+        if (!(currPrj instanceof TaskFilter) && currPrj instanceof Project) {
+            projectManager.addProject(localStorage.getItem(key));
+        }
     });
 }
 
