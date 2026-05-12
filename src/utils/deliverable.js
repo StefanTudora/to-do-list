@@ -1,18 +1,11 @@
 
-import { format, parseISO } from 'date-fns';
-
-// Base class for a deliverable
 class Deliverable {
-
-    // Used in date comparisons for date filtering deliverables
-    #dateObj = undefined;
 
     constructor(deliverableData) {
         if (deliverableData !== undefined) {
             for (const [key, value] of deliverableData) {
                 this[key] = value;
             }
-            this.#dateObj = parseISO(this.getDueDate());
         }
     }
 

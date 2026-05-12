@@ -7,10 +7,6 @@ class ProjectManager {
     #projectList = [];
     #activeProject = undefined;
 
-    constructor() {
-        // Intentionally left empty
-    }
-
     addProject(...projects) {
         for (const project of projects) {
             this.addProjectEntryInMenu(project);
@@ -46,6 +42,7 @@ class ProjectManager {
 
     // Set entry in menu, but also make sure to add active perspective listener
     getListableItem(project) {
+
         const listItem = document.createElement("li"), button = document.createElement("button"),
             listContainer = document.querySelector("#task-list-container");
         console.log(project.deliverableName);
@@ -64,10 +61,20 @@ class ProjectManager {
                     });
                 });
             }
+            
+            listContainer.appendChild(this.getTitleCard(project.getDeliverableName()));
             listContainer.appendChild(this.getProjectContentDiv(project));
         });
         listItem.appendChild(button);
         return listItem;
+    }
+
+    getTitleCard(projectName) {
+        const titleDiv = document.createElement("div");
+        titleDiv.innerHTML = `
+            <h1>${projectName}'s tasks<h1>
+        `;
+        return titleDiv;
     }
 
     // Add the 
@@ -79,7 +86,6 @@ class ProjectManager {
     getDeliverablePresentationCard(listable) {
 
         const listElement = document.createElement("li");
-
         listElement.innerHTML = `
             <div class="task-card">
                 <h3>${listable.getDeliverableName()}</h3>
