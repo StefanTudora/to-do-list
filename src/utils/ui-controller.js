@@ -15,10 +15,6 @@ function attachCreateDeliverableListeners() {
     });
 }
 
-function createTaskPresentationCard() {
-
-}
-
 function setAddTaskBtnVisibility(state) {
     const button = document.querySelector(".task-content > .controls  button");
     if (state) {

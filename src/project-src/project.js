@@ -1,8 +1,5 @@
 
-import { Task } from '../task-src/task.js'
 import { Deliverable } from '../utils/deliverable.js'
-
-// TODO -> split the project/task classes in UI and Model, don't have a single class handling the entire logic
 
 class Project extends Deliverable {
 
@@ -13,8 +10,8 @@ class Project extends Deliverable {
         super(deliverableData);
     }
 
-    addTask(task) {
-        this.#taskList.push(task);
+    addTask(delioverable) {
+        this.#taskList.push(delioverable);
     }
 
     getTaskList() {
@@ -25,6 +22,5 @@ class Project extends Deliverable {
         this.#taskList = [];
     }
 }
-
 
 export { Project };

@@ -30,7 +30,7 @@ function attachDialogButtonListener() {
 
         event.preventDefault();
         const type = dialog.dataset.type;
-        const data = new Map(new FormData(form));
+        const data = (new FormData(form)).entries();
 
         switch (type) {
             case "project":
@@ -76,10 +76,7 @@ function loadFromStorage() {
         return;
     }
     Object.keys(localStorage).forEach(function (key) {
-        const currPrj = localStorage.getItem(key);
-        if (!(currPrj instanceof TaskFilter) && currPrj instanceof Project) {
-            projectManager.addProject(localStorage.getItem(key));
-        }
+        projectManager.addProject(new Project(Object.entries(JSON.parse(localStorage.getItem(key)))));
     });
 }
 
