@@ -27,6 +27,11 @@ function attachDialogButtonListener() {
     });
 
     document.querySelector("#submit-btn").addEventListener("click", (event) => {
+        
+        // Skip if the form is invalid
+        if (!form.checkValidity()) {
+            return;
+        }
 
         event.preventDefault();
         const type = dialog.dataset.type;
