@@ -5,7 +5,7 @@ import { Task } from './task-src/task.js';
 import { Project } from './project-src/project.js';
 import { ProjectManager } from './project-src/project-manager.js';
 import { TaskFilter } from './project-src/task-filter.js';
-import { isToday, isTomorrow, isThisWeek } from 'date-fns';
+import { isToday, isTomorrow, isThisWeek, isBefore } from 'date-fns';
 
 const projectManager = new ProjectManager();
 
@@ -27,7 +27,7 @@ function attachDialogButtonListener() {
     });
 
     document.querySelector("#submit-btn").addEventListener("click", (event) => {
-        
+
         // Skip if the form is invalid
         if (!form.checkValidity()) {
             return;
@@ -57,10 +57,12 @@ function addBaseProjects() {
     const todayPrj = new TaskFilter('Today', isToday);
     const tommorowPrj = new TaskFilter('Tomorrow', isTomorrow);
     const weekPrj = new TaskFilter('This week', isThisWeek);
+    const overdue = new TaskFilter('Overdue', isBefore, new Date());
 
     projectManager.addProject(todayPrj);
     projectManager.addProject(tommorowPrj);
     projectManager.addProject(weekPrj);
+    projectManager.addProject(overdue);
 }
 
 // TODO -> move into the ui-controller class

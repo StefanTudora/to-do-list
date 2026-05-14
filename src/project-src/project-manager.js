@@ -72,7 +72,7 @@ class ProjectManager {
     getTitleCard(projectName) {
         const titleDiv = document.createElement("div");
         titleDiv.innerHTML = `
-            <h1>${projectName}'s tasks<h1>
+            <h3>${projectName}'s tasks<h3>
         `;
         return titleDiv;
     }
@@ -90,11 +90,18 @@ class ProjectManager {
             <div class="task-card">
                 <h3>${listable.getDeliverableName()}</h3>
                 <p>${listable.getDescription()}</p>
-                <p>${format(listable.getDueDate(), 'do MMMM yyyy')}</p>
-                <p>${listable.getPriority()}</p>
+                <p>Due Date: ${format(listable.getDueDate(), 'do MMMM yyyy')}</p>
+                <p p-class="${listable.getPriority()}" class="priority">${listable.getPriority()}</p>
+            </div>
+            <hr style="width: 100%;">
+            <div class="task-controls" style="display: flex; flex-direction: row; justify-content:space-between; align-items: center">
+                <label style="font-size: 15px">
+                    Hhhahaah
+                    <input type="checkbox">
+                </label>
+                <button>Edit task</button>
             </div>
         `;
-
         return listElement;
     }
 
