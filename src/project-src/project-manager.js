@@ -72,7 +72,7 @@ class ProjectManager {
     getTitleCard(projectName) {
         const titleDiv = document.createElement("div");
         titleDiv.innerHTML = `
-            <h3>${projectName}'s tasks<h3>
+            <h3>${projectName}<h3>
         `;
         return titleDiv;
     }
@@ -95,10 +95,7 @@ class ProjectManager {
             </div>
             <hr style="width: 100%;">
             <div class="task-controls" style="display: flex; flex-direction: row; justify-content:space-between; align-items: center">
-                <label style="font-size: 15px">
-                    Hhhahaah
-                    <input type="checkbox">
-                </label>
+                <input type="checkbox">
                 <button>Edit task</button>
             </div>
         `;
