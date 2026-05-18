@@ -3,7 +3,7 @@ class Deliverable {
 
     constructor(deliverableData) {
         if (deliverableData !== undefined) {
-            for (const [key, value] of deliverableData) {
+            for (const [key, value] of deliverableData.entries()) {
                 this[key] = value;
             }
         }

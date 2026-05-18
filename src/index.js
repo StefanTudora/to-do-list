@@ -27,54 +27,34 @@ function attachDialogButtonListener() {
     });
 
     document.querySelector("#submit-btn").addEventListener("click", (event) => {
-
         // Skip if the form is invalid
         if (!form.checkValidity()) {
             return;
         }
-
         event.preventDefault();
-        const type = dialog.dataset.type;
-        const data = (new FormData(form)).entries();
-
-        switch (type) {
-            case "project":
-                var project = new Project(data);
-                projectManager.addProject(project);
-                break;
-            case "task":
-                var task = new Task(data);
-                projectManager.addTaksToProject(task);
-                break;
-        }
+        const data = (new FormData(form));
+        projectManager.addTaksToProject(new Task(data));
         form.reset();
         dialog.close();
     });
 }
 
 function addBaseProjects() {
-
-    const todayPrj = new TaskFilter('Today', isToday);
-    const tommorowPrj = new TaskFilter('Tomorrow', isTomorrow);
-    const weekPrj = new TaskFilter('This week', isThisWeek);
-    const overdue = new TaskFilter('Overdue', isBefore, new Date());
-
-    projectManager.addProject(todayPrj);
-    projectManager.addProject(tommorowPrj);
-    projectManager.addProject(weekPrj);
-    projectManager.addProject(overdue);
+    projectManager.addProject(new TaskFilter('Today', isToday),
+        new TaskFilter('Tomorrow', isTomorrow),
+        new TaskFilter('This week', isThisWeek),
+        new TaskFilter('Overdue', isBefore, new Date()));
 }
 
-// TODO -> move into the ui-controller class
 function attachCreateDeliverableListeners() {
-    const typeList = ["project", "task"];
-    document.querySelectorAll(".create-btn").forEach((btn, idx) => {
-        btn.addEventListener("click", () => {
-            const dialog = document.querySelector("dialog");
-            // Set type to diferentiate at instantiation of deliverable
-            dialog.dataset.type = typeList[idx];
-            dialog.showModal();
-        });
+
+    document.querySelector("#add-task-btn").addEventListener("click", () => {
+        const dialog = document.querySelector("dialog");
+        dialog.showModal();
+    });
+
+    document.querySelector("#add-project-btn").addEventListener("click", () => {
+        projectManager.createEditableProjectEntry();
     });
 }
 
@@ -83,7 +63,7 @@ function loadFromStorage() {
         return;
     }
     Object.keys(localStorage).forEach(function (key) {
-        projectManager.addProject(new Project(Object.entries(JSON.parse(localStorage.getItem(key)))));
+        projectManager.addProject(new Project(new Map(Object.entries(JSON.parse(localStorage.getItem(key))))));
     });
 }
 

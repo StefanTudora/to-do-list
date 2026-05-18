@@ -1,5 +1,6 @@
 import { setAddTaskBtnVisibility } from '../utils/ui-controller.js'
 import { TaskFilter } from './task-filter.js';
+import { Project } from './project.js';
 import { format } from 'date-fns';
 
 class ProjectManager {
@@ -12,7 +13,7 @@ class ProjectManager {
             this.addProjectEntryInMenu(project);
             this.#projectList.push(project);
             if (project instanceof TaskFilter) {
-                return;
+                continue;
             }
             localStorage.setItem(project.getDeliverableName(), JSON.stringify(project));
         }
@@ -40,9 +41,7 @@ class ProjectManager {
         return this.#activeProject;
     }
 
-    // Set entry in menu, but also make sure to add active perspective listener
     getListableItem(project) {
-
         const listItem = document.createElement("li"), button = document.createElement("button"),
             listContainer = document.querySelector("#task-list-container");
         console.log(project.deliverableName);
@@ -61,7 +60,7 @@ class ProjectManager {
                     });
                 });
             }
-            
+
             listContainer.appendChild(this.getTitleCard(project.getDeliverableName()));
             listContainer.appendChild(this.getProjectContentDiv(project));
         });
@@ -77,7 +76,6 @@ class ProjectManager {
         return titleDiv;
     }
 
-    // Add the 
     addProjectEntryInMenu(listable) {
         const menuContainer = document.querySelector("nav > #menu");
         menuContainer.appendChild(this.getListableItem(listable));
@@ -85,6 +83,7 @@ class ProjectManager {
 
     getDeliverablePresentationCard(listable) {
 
+        const UUID = crypto.randomUUID();
         const listElement = document.createElement("li");
         listElement.innerHTML = `
             <div class="task-card">
@@ -94,8 +93,11 @@ class ProjectManager {
                 <p p-class="${listable.getPriority()}" class="priority">${listable.getPriority()}</p>
             </div>
             <hr style="width: 100%;">
-            <div class="task-controls" style="display: flex; flex-direction: row; justify-content:space-between; align-items: center">
-                <input type="checkbox">
+            <div class="task-controls">
+                <div>
+                    <input type="checkbox" id="${UUID}">
+                    <label for="${UUID}">Done</label>
+                </div>
                 <button>Edit task</button>
             </div>
         `;
@@ -103,17 +105,39 @@ class ProjectManager {
     }
 
     getProjectContentDiv(project) {
-        // Create parent container
         const projectUIContainer = document.createElement('ul');
         projectUIContainer.setAttribute("id", project.getDeliverableName());
         project.getTaskList().forEach(task => {
-            // Get the task container
             const taskUIContainer = this.getDeliverablePresentationCard(task);
             projectUIContainer.appendChild(taskUIContainer);
         });
         return projectUIContainer;
     }
 
+    // Create a textbox for the navbar where the user inputs his project
+    createEditableProjectEntry() {
+        const listItem = document.createElement("li");
+        const editable = document.createElement("input");
+        const menu = document.querySelector("nav > #menu");
+        const projectManagerRef = this;
+
+        editable.addEventListener("keypress", function (event) {
+            if (event.key == 'Enter') {
+                const projectName = editable.value;
+                if (projectName !== "") {
+                    editable.parentElement.removeChild(editable);
+                    const project = new Project(new Map([
+                        ['deliverableName', projectName]
+                    ]));
+                    projectManagerRef.addProject(project);
+                }
+            }
+        });
+
+        listItem.appendChild(editable);
+        menu.appendChild(listItem);
+        editable.focus();
+    }
 }
 
 export { ProjectManager };
