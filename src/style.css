@@ -112,7 +112,7 @@ nav>#dashboard-logo {
     transition: all 0.5s ease 0s;
 }
 
-.user-content>input:focus {
+.user-content > input:focus {
     width: 700px;
     color: white;
     background-color: #247291;
@@ -191,7 +191,6 @@ input:focus::placeholder {
 }
 
 #task-list-container li  {
-    /* text-decoration: line-through; */
     display: flex;
     flex-direction: column;
     background-color: rgb(252, 249, 217);
@@ -200,7 +199,6 @@ input:focus::placeholder {
     border-style: solid;
     padding: 5px 10px;
     transition: 0.3s;
-    /* transition: transform 0.3s ease-in-out; */
 }
 
 #task-list-container li button {
@@ -334,22 +332,9 @@ dialog .modal-btn:hover {
 }
 
 .task-controls input[type="checkbox"] {
-  /* ...existing styles */
   width: 1.25rem;
   height: 1.25rem;
-}
-
-.task-controls input[type="checkbox"]::before {
-  content: "";
-  width: 1rem;
-  height: 1rem;
-  transform: scale(0);
-  transition: 120ms transform ease-in-out;
-  box-shadow: inset 1rem 1rem var(--form-control-color);
-}
-
-.task-controls input[type="checkbox"]:checked::before {
-  transform: scale(2);
+  accent-color: #247291;
 }
 
 .task-controls {
@@ -359,12 +344,11 @@ dialog .modal-btn:hover {
     align-items: center;
 }
 
-#task-list-container li:has(input[type="checkbox"]:checked) > .task-card {
-    /* text-decoration: line-through; */
-    text-decoration: line-through;
-    text-decoration-thickness: 0.1rem;
+#task-list-container li .task-controls > div > button:last-child:hover {
+    background-color: rgb(182, 0, 0);
 }
 
-.task-controls .delete {
-    background-color: red;
+#task-list-container li:has(input[type="checkbox"]:checked) > .task-card {
+    text-decoration: line-through;
+    text-decoration-thickness: 0.15rem;
 }

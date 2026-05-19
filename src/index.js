@@ -63,7 +63,7 @@ function loadFromStorage() {
         return;
     }
     Object.keys(localStorage).forEach(function (key) {
-        projectManager.addProject(new Project(new Map(Object.entries(JSON.parse(localStorage.getItem(key))))));
+        projectManager.addProject(Project.fromJSON(localStorage.getItem(key)));
     });
 }
 

@@ -1,9 +1,9 @@
 
 import { Deliverable } from '../utils/deliverable.js'
+import { Task } from '../task-src/task.js'
 
 class Project extends Deliverable {
 
-    // List of current task for the Project
     #taskList = [];
 
     constructor(deliverableData) {
@@ -31,6 +31,24 @@ class Project extends Deliverable {
             deliverableName: this.deliverableName,
             taskList: this.#taskList
         };
+    }
+
+    static fromJSON(jsonData) {
+        const parsed = JSON.parse(jsonData);
+        const project = new Project(new Map(Object.entries({
+            deliverableName: parsed.deliverableName,
+            description: parsed.description,
+            dueDate: parsed.dueDate,
+            priority: parsed.priority
+        })));
+        if (parsed.taskList && Array.isArray(parsed.taskList)) {
+            parsed.taskList.forEach(taskData => {
+                const task = new Task(new Map(Object.entries(taskData)));
+                task.checkedProperty = taskData.checkedProperty;
+                project.addTask(task);
+            });
+        }
+        return project;
     }
 }
 

@@ -2,7 +2,6 @@ import { setAddTaskBtnVisibility } from '../utils/ui-controller.js'
 import { TaskFilter } from './task-filter.js';
 import { Project } from './project.js';
 import { format } from 'date-fns';
-import { list } from 'postcss';
 
 class ProjectManager {
 
@@ -45,7 +44,6 @@ class ProjectManager {
     getListableItem(project) {
         const listItem = document.createElement("li"), button = document.createElement("button"),
             listContainer = document.querySelector("#task-list-container");
-        console.log(project.deliverableName);
         const projectName = project.getDeliverableName();
         button.textContent = projectName;
         button.addEventListener("click", () => {
@@ -93,6 +91,8 @@ class ProjectManager {
                 <p>Due Date: ${format(listable.getDueDate(), 'do MMMM yyyy')}</p>
                 <p p-class="${listable.getPriority()}" class="priority">${listable.getPriority()}</p>
             </div>
+            ` +
+            (!(this.#activeProject instanceof TaskFilter) ? `
             <hr style="width: 100%;">
             <div class="task-controls">
                 <div>
@@ -100,20 +100,24 @@ class ProjectManager {
                     <label for="${UUID}">Done</label>
                 </div>
                 <div>
-                    <button class="edit">Edit task</button>
-                    <button class="delete">Delete task</button>
+                    <button class="edit-task">Edit task</button>
+                    <button class="delete-task">Delete task</button>
                 </div>
             </div>
-        `;
-        const checkBox = listElement.querySelector("div > div > input");
-        checkBox.addEventListener("click", () => {
-            listable.checkedProperty = checkBox.checked;
-        });
-        listElement.querySelector("button:last-child").addEventListener("click", () => {
-            listElement.parentElement.removeChild(listElement);
-            this.#activeProject.removeTask(listable);
-            // localStorage.setItem(this.#activeProject.getDeliverableName(), JSON.stringify(this.#activeProject));
-        });
+            ` : ``)
+            ;
+        if (!(this.#activeProject instanceof TaskFilter)) {
+            const checkBox = listElement.querySelector("div > div > input");
+            checkBox.addEventListener("click", () => {
+                listable.checkedProperty = checkBox.checked;
+                localStorage.setItem(this.#activeProject.getDeliverableName(), JSON.stringify(this.#activeProject));
+            });
+            listElement.querySelector("button:last-child").addEventListener("click", () => {
+                listElement.parentElement.removeChild(listElement);
+                this.#activeProject.removeTask(listable);
+                localStorage.setItem(this.#activeProject.getDeliverableName(), JSON.stringify(this.#activeProject));
+            });
+        }
         return listElement;
     }
 
@@ -133,6 +137,7 @@ class ProjectManager {
         const menu = document.querySelector("nav > #menu");
         const projectManagerRef = this;
 
+        // Replace editable textbox with listable project if input is valid
         editable.addEventListener("keypress", function (event) {
             if (event.key == 'Enter') {
                 const projectName = editable.value;
@@ -142,14 +147,15 @@ class ProjectManager {
                     console.error("Error removing the editable box for the project input: ", error);
                 }
                 if (projectName !== "") {
-                    const project = new Project(new Map([
-                        ['deliverableName', projectName]
-                    ]));
+                    const project = new Project(new Map(Object.entries({
+                        deliverableName: projectName
+                    })));
                     projectManagerRef.addProject(project);
                 }
             }
         });
 
+        // Remove empty editable in case the focus is lost
         editable.addEventListener("focusout", () => {
             if (editable.value === "") {
                 editable.parentElement.removeChild(editable);

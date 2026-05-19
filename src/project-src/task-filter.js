@@ -4,7 +4,6 @@ import { Project } from "./project.js";
 class TaskFilter extends Project {
 
     #comparisonDate = undefined;
-    // dueDate behaves now as a filtering paremeter
 
     constructor(deliverableName, dateCheckRunnable) {
         super();
