@@ -360,5 +360,11 @@ dialog .modal-btn:hover {
 }
 
 #task-list-container li:has(input[type="checkbox"]:checked) > .task-card {
+    /* text-decoration: line-through; */
     text-decoration: line-through;
+    text-decoration-thickness: 0.1rem;
+}
+
+.task-controls .delete {
+    background-color: red;
 }

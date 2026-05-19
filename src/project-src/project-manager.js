@@ -2,6 +2,7 @@ import { setAddTaskBtnVisibility } from '../utils/ui-controller.js'
 import { TaskFilter } from './task-filter.js';
 import { Project } from './project.js';
 import { format } from 'date-fns';
+import { list } from 'postcss';
 
 class ProjectManager {
 
@@ -95,12 +96,24 @@ class ProjectManager {
             <hr style="width: 100%;">
             <div class="task-controls">
                 <div>
-                    <input type="checkbox" id="${UUID}">
+                    <input type="checkbox" id="${UUID}" ${listable.checkedProperty === true ? "checked" : ""}>
                     <label for="${UUID}">Done</label>
                 </div>
-                <button>Edit task</button>
+                <div>
+                    <button class="edit">Edit task</button>
+                    <button class="delete">Delete task</button>
+                </div>
             </div>
         `;
+        const checkBox = listElement.querySelector("div > div > input");
+        checkBox.addEventListener("click", () => {
+            listable.checkedProperty = checkBox.checked;
+        });
+        listElement.querySelector("button:last-child").addEventListener("click", () => {
+            listElement.parentElement.removeChild(listElement);
+            this.#activeProject.removeTask(listable);
+            // localStorage.setItem(this.#activeProject.getDeliverableName(), JSON.stringify(this.#activeProject));
+        });
         return listElement;
     }
 
@@ -114,7 +127,6 @@ class ProjectManager {
         return projectUIContainer;
     }
 
-    // Create a textbox for the navbar where the user inputs his project
     createEditableProjectEntry() {
         const listItem = document.createElement("li");
         const editable = document.createElement("input");
@@ -124,13 +136,23 @@ class ProjectManager {
         editable.addEventListener("keypress", function (event) {
             if (event.key == 'Enter') {
                 const projectName = editable.value;
-                if (projectName !== "") {
+                try {
                     editable.parentElement.removeChild(editable);
+                } catch (error) {
+                    console.error("Error removing the editable box for the project input: ", error);
+                }
+                if (projectName !== "") {
                     const project = new Project(new Map([
                         ['deliverableName', projectName]
                     ]));
                     projectManagerRef.addProject(project);
                 }
+            }
+        });
+
+        editable.addEventListener("focusout", () => {
+            if (editable.value === "") {
+                editable.parentElement.removeChild(editable);
             }
         });
 

@@ -5,6 +5,7 @@ class Task extends Deliverable {
 
     constructor(deliverableData) {
         super(deliverableData);
+        this.checkedProperty = false;
     }
 
     getListableUIContainer() {

@@ -10,8 +10,12 @@ class Project extends Deliverable {
         super(deliverableData);
     }
 
-    addTask(delioverable) {
-        this.#taskList.push(delioverable);
+    addTask(deliverable) {
+        this.#taskList.push(deliverable);
+    }
+
+    removeTask(deliverable) {
+        this.#taskList = this.#taskList.filter(task => task !== deliverable);
     }
 
     getTaskList() {
@@ -20,6 +24,13 @@ class Project extends Deliverable {
 
     clearTaskList() {
         this.#taskList = [];
+    }
+
+    toJSON() {
+        return {
+            deliverableName: this.deliverableName,
+            taskList: this.#taskList
+        };
     }
 }
 

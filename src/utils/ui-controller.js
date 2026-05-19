@@ -3,6 +3,7 @@
     Class responsible for the UI creation
 */
 
+
 function attachCreateDeliverableListeners() {
     const typeList = ["project", "task"];
     document.querySelectorAll(".create-btn").forEach((btn, idx) => {
