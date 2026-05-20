@@ -8,6 +8,14 @@ class Task extends Deliverable {
         this.checkedProperty = false;
     }
 
+    setData(data) {
+        if (data !== undefined) {
+            for (const [key, value] of data.entries()) {
+                this[key] = value;
+            }
+        }
+    }
+
     getListableUIContainer() {
         const listElement = document.createElement("li");
         listElement.appendChild(document.createTextNode(this.project));

@@ -1,4 +1,4 @@
-import { setAddTaskBtnVisibility } from '../utils/ui-controller.js'
+// import { setAddTaskBtnVisibility } from '../utils/ui-controller.js'
 import { TaskFilter } from './task-filter.js';
 import { Project } from './project.js';
 import { format } from 'date-fns';
@@ -34,11 +34,20 @@ class ProjectManager {
     }
 
     setBtnVisibility(state) {
-        setAddTaskBtnVisibility(state);
+        this.setAddTaskBtnVisibility(state);
     }
 
     getActiveProject() {
         return this.#activeProject;
+    }
+
+    setAddTaskBtnVisibility(state) {
+        const button = document.querySelector(".task-content > .controls  button");
+        if (state) {
+            button.hidden = false;
+        } else {
+            button.hidden = true;
+        }
     }
 
     getListableItem(project) {
@@ -84,8 +93,9 @@ class ProjectManager {
 
         const UUID = crypto.randomUUID();
         const listElement = document.createElement("li");
+        const taskUUID = `task${crypto.randomUUID()}`;
         listElement.innerHTML = `
-            <div class="task-card">
+            <div class="task-card" id="${taskUUID}">
                 <h3>${listable.getDeliverableName()}</h3>
                 <p>${listable.getDescription()}</p>
                 <p>Due Date: ${format(listable.getDueDate(), 'do MMMM yyyy')}</p>
@@ -116,6 +126,18 @@ class ProjectManager {
                 listElement.parentElement.removeChild(listElement);
                 this.#activeProject.removeTask(listable);
                 localStorage.setItem(this.#activeProject.getDeliverableName(), JSON.stringify(this.#activeProject));
+            });
+            listElement.querySelector(".edit-task").addEventListener("click", () => {
+                // Add the edit logic here for the task
+                document.getElementById("deliverableName").value = listable.getDeliverableName();
+                document.getElementById("description").value = listable.getDescription();
+                document.getElementById("dueDate").value = listable.getDueDate();
+                document.getElementById("priority").value = listable.getPriority();
+
+                const dialog = document.querySelector("dialog");
+                dialog.dataset.taskID = taskUUID;
+                listable.taskID = taskUUID;
+                dialog.showModal();
             });
         }
         return listElement;
