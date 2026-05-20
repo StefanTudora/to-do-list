@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.cdnfonts.com/css/lucida-sans" rel="stylesheet">
+    <title>Document</title>
+<script defer src="main.js"></script></head>
+
+<body>
+    <nav>
+        <div id="dashboard-logo">
+            <img src="6a45d620673db1d4ab71.svg">
+            <p>DashDone</p>
+        </div>
+        <hr>
+        <ul id="menu">
+            <!-- Dinamicaly handled -->
+        </ul>
+        <hr>
+        <div id="controls">
+            <button id="add-project-btn" class="create-btn">+ Add Project</button>
+        </div>
+    </nav>
+    <div id="main-content">
+        <div class="user-content">
+            <div>
+                <img src="db730a79622199d252e2.svg" style="width: 3.5rem;">
+                <p style="font-size: 1.5rem;">: Hello, friend! Let me give you a hand!</p>
+            </div>
+            <input placeholder="Task search...">
+        </div>
+        <div class="task-content">
+            <div class="controls">
+                <button id="add-task-btn" class="create-btn">+ Add Task</button>
+            </div>
+            <div id="task-list-container">
+                <!-- Dinamicaly generated -->
+                <div id="temp-div">
+                    <img src="a26408042fd287b2229e.svg" style="width: 15rem;">
+                    <p>Oops! Please select a project to begin planning!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for project/task creation -->
+    <dialog>
+        <form method="dialog">
+            <div class="inputs">
+                <div>
+                    <label for="deliverableName">Task Name</label>
+                    <input type="text" name="deliverableName" id="deliverableName" maxlength="30" required>
+                </div>
+                <div>
+                    <label for="description">Description</label>
+                    <textarea name="description" id="description" style="height:5rem;"
+                        placeholder="Input short description..." maxlength="255" required></textarea>
+                </div>
+                <div>
+                    <label for="dueDate">Due Date</label>
+                    <input type="date" name="dueDate" id="dueDate" required>
+                </div>
+                <div>
+                    <label for="priority">Priority</label>
+                    <select name="priority" id="priority">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+            </div>
+            <div class="controls">
+                <button type="button" class="modal-btn" id="close-btn">Close</button>
+                <input type="submit" class="modal-btn" id="submit-btn">
+            </div>
+        </form>
+    </dialog>
+</body>
+
+
+</html>
